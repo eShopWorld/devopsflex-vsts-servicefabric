@@ -1,0 +1,85 @@
+{
+  "manifestVersion": 1,
+  "id": "servicefabricupdater",
+  "version": "1.0.4",
+  "name": "Service Fabric Updater",
+  "scopes": [],
+  "description": "Update specific values in Service Fabric manifests.",
+  "publisher": "eshopworld",
+  "galleryFlags": [
+    "Preview"
+  ],
+  "icons": {
+    "default": "static/images/logo.png"
+  },
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "demands": [
+    "api-version/3.0"
+  ],
+  "tags": [
+    "Service Fabric Manifest Updater",
+    "Service Fabric",
+    "Manifest",
+    "Version"
+  ],
+  "categories": [
+    "Build and release"
+  ],
+  "screenshots": [
+    {
+      "path": "ServiceFabricUpdater/static/images/capture2.png"
+    }
+  ],
+  "content": {
+    "license": {
+      "path": "ServiceFabricUpdater/license.md"
+    },
+    "details": {
+      "path": "ServiceFabricUpdater/overview.md"
+    }
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/eShopWorld/devopsflex-vsts-tasks"
+    },
+    "support": {
+      "uri": "https://github.com/eShopWorld/devopsflex-vsts-tasks"
+    },
+    "issues": {
+      "uri": "https://github.com/eShopWorld/devopsflex-vsts-tasks/issues"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/eShopWorld/devopsflex-vsts-tasks.git"
+  },
+  "branding": {
+    "color": "rgb(220, 235, 252)",
+    "theme": "light"
+  },
+  "files": [
+    {
+      "path": "ServiceFabricUpdater"
+    },
+    {
+      "path": "ps_modules",
+      "packagePath": "ServiceFabricUpdater/ServiceFabricUpdater/ps_modules"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "ServiceFabricUpdater",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "type": "ms.vss-distributed-task.task",
+      "properties": {
+        "name": "ServiceFabricUpdater"
+      }
+    }
+  ]
+}
