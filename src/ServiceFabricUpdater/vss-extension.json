@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "servicefabricupdater",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "name": "Service Fabric Updater",
   "scopes": [],
   "description": "Update specific values in Service Fabric manifests.",
