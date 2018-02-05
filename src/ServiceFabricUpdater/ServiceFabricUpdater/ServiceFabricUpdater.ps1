@@ -81,12 +81,13 @@ try {
     Write-Output (Get-VstsLocString -Key 'PS_AppManifestUpdated' -ArgumentList $input_AppManifestPath)
 
     #Find and update any ServiceManifests
-    $path = (Get-Item $input_AppManifestPath).Parent.FullName
+    $path = (Get-Item $input_AppManifestPath).Directory.FullName
 
     $svcManifests = Get-ChildItem -Path $path -Include "ServiceManifest.xml" -Recurse
 
     $svcManifests | % {
-        $serviceManifestXml = [XML](Get-Content -Path $_.FullName)    
+        $serviceManifestPath = $_.FullName
+        $serviceManifestXml = [XML](Get-Content -Path $serviceManifestPath)    
 
         #Update the full version or just add a revision
         if($input_VersionType -eq "version") {
@@ -102,11 +103,15 @@ try {
         }
 
         #Update the port number
-        if($serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint.GetAttribute("Port")){
-            $serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint.Port = $input_Port
-            $input_Port += 1
-        }else {
-            Write-Warning (Get-VstsLocString -Key 'PS_MissingAttribute' -ArgumentList "Port", $_.FullName)
+        $serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint | % {
+            $endPoint = $_
+            
+            if($endPoint.GetAttribute("Port")){
+                $endPoint.Port = $input_Port
+                $input_Port += 1
+            }else {
+                Write-Warning (Get-VstsLocString -Key 'PS_MissingPortAttribute' -ArgumentList $endPoint.Name, $serviceManifestPath)
+            }
         }
 
         $serviceManifestXml.Save($_.FullName)  
