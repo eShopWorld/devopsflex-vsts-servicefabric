@@ -8,7 +8,7 @@
   "visibility": [ "Build", "Release" ],
   "author": "Colin Farrelly",
   "version": {
-    "Major": 4,
+    "Major": 5,
     "Minor": 0,
     "Patch": 0
   },
@@ -58,9 +58,9 @@
       "options": {
         "empty": "",
         "ci": "CI",
-        "sit": "TEST",
-        "uat": "PREPROD",
-        "uatrc": "SAND",
+        "test": "TEST",
+        "preprod": "PREPROD",
+        "sand": "SAND",
         "prod": "PROD"
       },
       "required": false,
