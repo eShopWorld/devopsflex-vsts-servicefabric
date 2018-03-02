@@ -110,7 +110,7 @@ try {
                 $endPoint.Port = $input_Port
                 $input_Port += 1
             }else {
-                Write-Warning (Get-VstsLocString -Key 'PS_MissingPortAttribute' -ArgumentList $endPoint.Name, $serviceManifestPath)
+                Write-Output (Get-VstsLocString -Key 'PS_MissingPortAttribute' -ArgumentList $endPoint.Name, $serviceManifestPath)
             }
         }
 

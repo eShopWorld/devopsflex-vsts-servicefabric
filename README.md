@@ -1,5 +1,5 @@
-# devopsflex-vsts-tasks
-Custom tasks written to make VSTS build / release definitions more readable and reusable for our multi environment, multi tenanted eco system.
+# vsts-servicefabric
+Custom tasks written to make VSTS build / release definitions more readable and reusable for our multi environment, multi tenanted eco system. This repo deals with servicefabric extentsions.
 
 [](https://eshopworld.visualstudio.com/_apis/public/build/definitions/310eec01-7d3c-402e-b179-74a206e8d4e3/116/badge)
 
@@ -26,4 +26,4 @@ An easy way to create a new task is to use [yeoman](http://yeoman.io/) to scaffo
 
 ## Task List
 
-- [Service Fabric Updater](https://github.com/eShopWorld/devopsflex-vsts-tasks/blob/master/src/ServiceFabricUpdater/overview.md)
+- [Service Fabric Updater](https://github.com/eShopWorld/vsts-servicefabric/blob/master/src/ServiceFabricUpdater/overview.md)
