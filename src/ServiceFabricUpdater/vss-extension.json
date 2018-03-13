@@ -1,14 +1,12 @@
 {
   "manifestVersion": 1,
   "id": "servicefabricupdater",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "name": "Service Fabric Updater",
   "scopes": [],
   "description": "Update specific values in Service Fabric manifests.",
   "publisher": "eshopworld",
-  "galleryFlags": [
-    "Public"
-  ],
+  "public": true,
   "icons": {
     "default": "static/images/logo.png"
   },
