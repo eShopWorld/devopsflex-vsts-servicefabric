@@ -8,7 +8,7 @@
   "visibility": [ "Build", "Release" ],
   "author": "Colin Farrelly",
   "version": {
-    "Major": 6,
+    "Major": 7,
     "Minor": 0,
     "Patch": 0
   },
