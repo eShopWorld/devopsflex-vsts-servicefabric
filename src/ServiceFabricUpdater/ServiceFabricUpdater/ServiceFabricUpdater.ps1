@@ -23,7 +23,7 @@ try {
     $input_AppManifestPath = Get-VstsInput -Name 'AppManifestPath' -Require
     $input_Version = Get-VstsInput -Name 'Version' -Require
     $input_VersionType = Get-VstsInput -Name 'VersionType' -Require
-    $input_Port = Get-VstsInput -Name 'Port' -Require
+    $input_Port = Get-VstsInput -Name 'Port'
     $input_Environment = Get-VstsInput -Name 'Environment'
     $input_Tenant = Get-VstsInput -Name 'Tenant'
 

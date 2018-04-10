@@ -56,7 +56,7 @@
       "label": "Environment code",
       "defaultValue": "empty",
       "options": {
-        "empty": "",
+        "": "",
         "ci": "CI",
         "test": "TEST",
         "preprod": "PREPROD",
