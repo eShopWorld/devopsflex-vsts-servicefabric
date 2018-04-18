@@ -156,8 +156,7 @@ try {
 
         $serviceManifestXml.Save($_.FullName)  
 
-		#set the region env variable for the 
-        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)
+		Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
