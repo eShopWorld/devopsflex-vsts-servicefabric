@@ -14,5 +14,6 @@ $env:input_VersionType = "version"
 $env:input_Port = "9800"
 $env:input_Environment = "SAND"
 $env:input_Tenant = "TEST"
+$env:input_Region ="West Europe"
 
 Invoke-VstsTaskScript -ScriptBlock { . ..\ServiceFabricUpdater\ServiceFabricUpdater.ps1 }
