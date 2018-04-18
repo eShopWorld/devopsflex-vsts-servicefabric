@@ -56,7 +56,7 @@
       "label": "Environment code",
       "defaultValue": "empty",
       "options": {
-        "": "",
+        "empty": "",
         "ci": "CI",
         "test": "TEST",
         "preprod": "PREPROD",
@@ -73,6 +73,20 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "This will add the tenant code to the name of the application."
+    },
+    {
+      "name": "Region",
+      "type": "pickList",
+      "label": "Region name",
+      "defaultValue": "West Europe",
+      "options": {
+        "West Europe": "West Europe",
+        "East US": "East US",
+        "West US": "West US",
+        "Southeast Asia": "Southeast Asia"
+      },
+      "required": true,
+      "helpMarkDown": "This will set the region environment variable up."
     }
   ],
   "instanceNameFormat": "Service Fabric Updater: $(Environment)",
