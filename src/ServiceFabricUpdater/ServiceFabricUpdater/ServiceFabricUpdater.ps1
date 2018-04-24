@@ -1,10 +1,45 @@
 #
 # ServiceFabricUpdater.ps1
 #
+
 [CmdletBinding()]
 param()
 
 Trace-VstsEnteringInvocation $MyInvocation
+
+<#
+this function upserts an environmental variable for region to the manifest
+#>
+function Upsert-RegionEnvironmentVariable()
+{
+    param(
+        [Parameter(Mandatory = $true, Position = 1)]
+        [XML]$xml,
+        [Parameter(Mandatory = $true, Position = 2)]
+        [string]$Region)
+
+        $newEnv = $xml.CreateElement("EnvironmentVariable", "http://schemas.microsoft.com/2011/01/fabric")
+
+        $newNameAttr = $xml.CreateAttribute("Name")
+        $newNameAttr.Value = "DEPLOYMENT_REGION"
+        
+        $newValueAttr = $xml.CreateAttribute("Value")
+        $newValueAttr.Value = $Region
+
+        $newEnv.Attributes.Append($newNameAttr)
+        $newEnv.Attributes.Append($newValueAttr)
+
+        #insert or replace
+        $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | where {$_.Name -eq 'DEPLOYMENT_REGION'}
+        if ($oldEnv)
+        {
+            $xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
+        }
+        else
+        {
+            $xml.ServiceManifest.CodePackage.EnvironmentVariables.AppendChild($newEnv)    
+        }
+}
 
 try {
     Import-VstsLocStrings "$PSScriptRoot\task.json"
@@ -26,6 +61,7 @@ try {
     $input_Port = Get-VstsInput -Name 'Port'
     $input_Environment = Get-VstsInput -Name 'Environment'
     $input_Tenant = Get-VstsInput -Name 'Tenant'
+	$input_Region = Get-VstsInput -Name 'Region'
 
     Write-Output "Inputs..."
     Write-Output "Applcation manifest path: $input_AppManifestPath"
@@ -34,6 +70,7 @@ try {
     Write-Output "Port: $input_Port"
     Write-Output "Environment: $input_Environment"
     Write-Output "Tenant: $input_Tenant"
+	Write-Output "Region: $input_Region"
 
     #Guard against wrong files being passed in
     try {
@@ -114,9 +151,12 @@ try {
             }
         }
 
+        #upsert region
+        Upsert-RegionEnvironmentVariable $serviceManifestXml $input_Region
+
         $serviceManifestXml.Save($_.FullName)  
 
-        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)
+		Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
