@@ -9,7 +9,7 @@
   "author": "Colin Farrelly",
   "version": {
     "Major": 7,
-    "Minor": 1,
+    "Minor": 2,
     "Patch": 0
   },
   "demands": [],
@@ -82,7 +82,7 @@
       "options": {
         "West Europe": "West Europe",
         "East US": "East US",
-        "West US": "West US",
+        "West US": "Australia Southeast",
         "Southeast Asia": "Southeast Asia"
       },
       "required": true,
