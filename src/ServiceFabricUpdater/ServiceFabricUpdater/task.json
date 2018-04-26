@@ -82,7 +82,7 @@
       "options": {
         "West Europe": "West Europe",
         "East US": "East US",
-        "West US": "Australia Southeast",
+        "Australia Southeast": "Australia Southeast",
         "Southeast Asia": "Southeast Asia"
       },
       "required": true,
