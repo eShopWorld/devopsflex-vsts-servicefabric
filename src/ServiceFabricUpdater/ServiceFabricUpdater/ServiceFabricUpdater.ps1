@@ -140,16 +140,21 @@ try {
         }
 
         #Update the port number
-        $serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint | % {
+		if($input_Port){
+			$serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint | % {
             $endPoint = $_
             
-            if($endPoint.GetAttribute("Port")){
+			if($endPoint.GetAttribute("Port")){
                 $endPoint.Port = $input_Port
                 $input_Port += 1
             }else {
                 Write-Output (Get-VstsLocString -Key 'PS_MissingPortAttribute' -ArgumentList $endPoint.Name, $serviceManifestPath)
             }
         }
+		}else {
+			Write-Output (Get-VstsLocString -Key 'PS_NoPort')
+		}
+		
 
         #upsert region
         Upsert-RegionEnvironmentVariable $serviceManifestXml $input_Region

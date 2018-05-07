@@ -8,8 +8,8 @@
   "visibility": [ "Build", "Release" ],
   "author": "Colin Farrelly",
   "version": {
-    "Major": 7,
-    "Minor": 2,
+    "Major": 1,
+    "Minor": 0,
     "Patch": 0
   },
   "demands": [],
@@ -104,7 +104,8 @@
     "PS_InvalidFilePath": "Invalid file path '{0}'. A valid path to the manifest file is required.",
     "PS_MissingPortAttribute": "The port attribute does not exist on the '{0}' endpoint in the '{1}' service manifest file.",
     "PS_UnableToDetermineExitCode": "Unexpected exception. Unable to determine the exit code from powershell.",
-    "PS_NoTenant": "No tenant provided , skipping...",
+    "PS_NoTenant": "No tenant provided, skipping...",
+    "PS_NoPort": "No port provided, using default port in service manifests...",
     "PS_NoEnvironment": "No environment provided , skipping...",
     "PS_AppManifestUpdated": "ApplicationManifest.xml located at '{0}' updated successfully.",
     "PS_SvcManifestUpdated": "ServiceManifest.xml located at '{0}' updated successfully."
