@@ -9,7 +9,7 @@
   "author": "Colin Farrelly",
   "version": {
     "Major": 1,
-    "Minor": 1,
+    "Minor": 2,
     "Patch": 0
   },
   "demands": [],
@@ -109,6 +109,8 @@
     "PS_NoEnvironment": "No environment provided , skipping...",
     "PS_AppManifestUpdated": "ApplicationManifest.xml located at '{0}' updated successfully.",
     "PS_SvcManifestUpdated": "ServiceManifest.xml located at '{0}' updated successfully.",
-    "PS_UpdatingManifest": "Updating the service manifest located at '{0}'"
+    "PS_UpdatingManifest": "Updating the service manifest located at '{0}'",
+    "PS_SvcManifestRegion": "Upserting region '{0}'",
+    "PS_SvcManifestRegionSuccess": "Upserting region '{0}' success!"
   }
 }

@@ -18,6 +18,8 @@ function Upsert-RegionEnvironmentVariable()
         [Parameter(Mandatory = $true, Position = 2)]
         [string]$Region)
 
+        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestRegion' -ArgumentList $Region)
+
         $newEnv = $xml.CreateElement("EnvironmentVariable", "http://schemas.microsoft.com/2011/01/fabric")
 
         $newNameAttr = $xml.CreateAttribute("Name")
@@ -30,7 +32,7 @@ function Upsert-RegionEnvironmentVariable()
         $newEnv.Attributes.Append($newValueAttr)
 
         #insert or replace
-        $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | where {$_.Name -eq 'DEPLOYMENT_REGION'}
+        $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | ? {$_.Name -eq 'DEPLOYMENT_REGION'}
         if ($oldEnv)
         {
             $xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
@@ -39,6 +41,8 @@ function Upsert-RegionEnvironmentVariable()
         {
             $xml.ServiceManifest.CodePackage.EnvironmentVariables.AppendChild($newEnv)    
         }
+
+        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestRegionSuccess' -ArgumentList $Region)
 }
 
 try {
@@ -123,8 +127,8 @@ try {
     $svcManifests = Get-ChildItem -Path $path -Include "ServiceManifest.xml" -Recurse
 
     $svcManifests | % {
-        Write-Output (Get-VstsLocString -Key 'PS_UpdatingManifest' -ArgumentList $serviceManifestPath)
         $serviceManifestPath = $_.FullName
+        Write-Output (Get-VstsLocString -Key 'PS_UpdatingManifest' -ArgumentList $serviceManifestPath)
         $serviceManifestXml = [XML](Get-Content -Path $serviceManifestPath)    
 
         #Update the full version or just add a revision
