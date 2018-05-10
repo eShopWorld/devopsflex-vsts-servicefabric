@@ -21,7 +21,7 @@ function Upsert-RegionEnvironmentVariable()
         Write-Output (Get-VstsLocString -Key 'PS_SvcManifestRegion' -ArgumentList $Region)
 
         $newEnv = $xml.CreateElement("EnvironmentVariable", "http://schemas.microsoft.com/2011/01/fabric")
-
+        
         $newNameAttr = $xml.CreateAttribute("Name")
         $newNameAttr.Value = "DEPLOYMENT_REGION"
         
@@ -32,17 +32,29 @@ function Upsert-RegionEnvironmentVariable()
         $newEnv.Attributes.Append($newValueAttr)
 
         #insert or replace
-        $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | ? {$_.Name -eq 'DEPLOYMENT_REGION'}
-        if ($oldEnv)
+
+        $envVar = $xml.ServiceManifest.CodePackage.EnvironmentVariables 
+
+        if(!$envVar)
         {
-            $xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
+            $newEnvVars = $xml.CreateElement("EnvironmentVariables", "http://schemas.microsoft.com/2011/01/fabric")
+            $newEnvVars.AppendChild($newEnv)
+            $xml.ServiceManifest.CodePackage.AppendChild($newEnvVars)
         }
         else
         {
+            $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | ? {$_.Name -eq 'DEPLOYMENT_REGION'}
+            if ($oldEnv)
+            {
+            $xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
+            }
+            else
+            {            
             $xml.ServiceManifest.CodePackage.EnvironmentVariables.AppendChild($newEnv)    
+            }
         }
 
-        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestRegionSuccess' -ArgumentList $Region)
+        Write-Output (Get-VstsLocString -Key 'PS_SvcManifestRegionSuccess' -ArgumentList $Region)     
 }
 
 try {
