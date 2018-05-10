@@ -61,7 +61,7 @@ try {
     $input_Port = Get-VstsInput -Name 'Port'
     $input_Environment = Get-VstsInput -Name 'Environment'
     $input_Tenant = Get-VstsInput -Name 'Tenant'
-	$input_Region = Get-VstsInput -Name 'Region'
+    $input_Region = Get-VstsInput -Name 'Region'
 
     Write-Output "Inputs..."
     Write-Output "Applcation manifest path: $input_AppManifestPath"
@@ -70,7 +70,7 @@ try {
     Write-Output "Port: $input_Port"
     Write-Output "Environment: $input_Environment"
     Write-Output "Tenant: $input_Tenant"
-	Write-Output "Region: $input_Region"
+    Write-Output "Region: $input_Region"
 
     #Guard against wrong files being passed in
     try {
@@ -123,6 +123,7 @@ try {
     $svcManifests = Get-ChildItem -Path $path -Include "ServiceManifest.xml" -Recurse
 
     $svcManifests | % {
+        Write-Output (Get-VstsLocString -Key 'PS_UpdatingManifest' -ArgumentList $serviceManifestPath)
         $serviceManifestPath = $_.FullName
         $serviceManifestXml = [XML](Get-Content -Path $serviceManifestPath)    
 
@@ -140,22 +141,21 @@ try {
         }
 
         #Update the port number
-		if($input_Port){
-			$serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint | % {
+        if($input_Port){
+            $serviceManifestXml.ServiceManifest.Resources.Endpoints.Endpoint | % {
             $endPoint = $_
             
-			if($endPoint.GetAttribute("Port")){
+            if($endPoint.GetAttribute("Port")){
                 $endPoint.Port = $input_Port
                 $input_Port += 1
             }else {
                 Write-Output (Get-VstsLocString -Key 'PS_MissingPortAttribute' -ArgumentList $endPoint.Name, $serviceManifestPath)
             }
         }
-		}else {
-			Write-Output (Get-VstsLocString -Key 'PS_NoPort')
-		}
+        }else {
+            Write-Output (Get-VstsLocString -Key 'PS_NoPort')
+        }
 		
-
         #upsert region
         Upsert-RegionEnvironmentVariable $serviceManifestXml $input_Region
 
