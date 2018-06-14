@@ -111,7 +111,7 @@ try {
     }
 
     #Add an environment qualifier to the application name if one has been supplied
-    if($input_Environment){
+    if(($input_Environment -ne "empty") -and ($input_Environment -ne $null)){
         $newApplicationName = $applicationManifestXml.ApplicationManifest.ApplicationTypeName + "-$input_Environment".ToUpperInvariant()
         $applicationManifestXml.ApplicationManifest.ApplicationTypeName = $newApplicationName
     }else {
