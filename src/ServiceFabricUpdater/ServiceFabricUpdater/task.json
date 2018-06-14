@@ -9,7 +9,7 @@
   "author": "Colin Farrelly",
   "version": {
     "Major": 1,
-    "Minor": 3,
+    "Minor": 4,
     "Patch": 0
   },
   "demands": [],
@@ -54,7 +54,7 @@
       "name": "Environment",
       "type": "pickList",
       "label": "Environment code",
-      "defaultValue": "empty",
+      "defaultValue": "",
       "options": {
         "empty": "",
         "ci": "CI",
