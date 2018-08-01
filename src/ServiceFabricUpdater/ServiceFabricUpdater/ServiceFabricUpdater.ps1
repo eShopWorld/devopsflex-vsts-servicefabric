@@ -136,7 +136,7 @@ try {
     Write-Output (Get-VstsLocString -Key 'PS_AppManifestUpdated' -ArgumentList $input_AppManifestPath)
 
     #Update the application name in the application parameters file
-    if($input_AppParametersPath){
+    if($input_AppParametersPath.EndsWith(".xml")){
         Write-Output (Get-VstsLocString -Key 'PS_UpdatingAppParameters' -ArgumentList $input_AppParametersPath)
         $appParametersXml = [XML](Get-Content -Path $input_AppParametersPath)
 
