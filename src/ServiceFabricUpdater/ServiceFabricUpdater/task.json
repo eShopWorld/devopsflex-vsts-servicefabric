@@ -10,7 +10,7 @@
   "version": {
     "Major": 1,
     "Minor": 5,
-    "Patch": 2
+    "Patch": 3
   },
   "demands": [],
   "inputs": [
@@ -51,6 +51,22 @@
       "helpMarkDown": "This will update the port number the service is deployed to. If there are multiple services the port will be incremented."
     },
     {
+      "name": "AppParametersPath",
+      "type": "filePath",
+      "label": "Application parameters path",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkdown": "Path to the application parameters file."
+    },
+    {
+      "name": "Tenant",
+      "type": "string",
+      "label": "Tenant code",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "This will add the tenant code to the name of the application."
+    },
+    {
       "name": "Environment",
       "type": "pickList",
       "label": "Environment code",
@@ -67,14 +83,6 @@
       "helpMarkDown": "This will add the environment qualifier to the name of the application."
     },
     {
-      "name": "Tenant",
-      "type": "string",
-      "label": "Tenant code",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "This will add the tenant code to the name of the application."
-    },
-    {
       "name": "Region",
       "type": "pickList",
       "label": "Region name",
@@ -89,7 +97,7 @@
       "helpMarkDown": "This will set the region environment variable up."
     }
   ],
-  "instanceNameFormat": "Service Fabric Updater: $(Environment)",
+  "instanceNameFormat": "Service Fabric Updater",
   "execution": {
     "PowerShell3": {
       "target": "$(currentDirectory)\\ServiceFabricUpdater.ps1",
@@ -111,6 +119,7 @@
     "PS_SvcManifestUpdated": "ServiceManifest.xml located at '{0}' updated successfully.",
     "PS_UpdatingManifest": "Updating the service manifest located at '{0}'",
     "PS_SvcManifestRegion": "Upserting region '{0}'",
-    "PS_SvcManifestRegionSuccess": "Upserting region '{0}' success!"
+    "PS_SvcManifestRegionSuccess": "Upserting region '{0}' success!",
+    "PS_UpdatingAppParameters":  "Updating the application parameters file located at '{0}'" 
   }
 }

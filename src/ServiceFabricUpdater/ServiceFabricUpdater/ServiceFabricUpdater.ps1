@@ -46,11 +46,11 @@ function Upsert-RegionEnvironmentVariable()
             $oldEnv = $xml.ServiceManifest.CodePackage.EnvironmentVariables.EnvironmentVariable | ? {$_.Name -eq 'DEPLOYMENT_REGION'}
             if ($oldEnv)
             {
-            $xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
+				$xml.ServiceManifest.CodePackage.EnvironmentVariables.ReplaceChild($newEnv, $oldEnv)
             }
             else
             {            
-            $xml.ServiceManifest.CodePackage.EnvironmentVariables.AppendChild($newEnv)    
+				$xml.ServiceManifest.CodePackage.EnvironmentVariables.AppendChild($newEnv)    
             }
         }
 
@@ -75,8 +75,9 @@ try {
     $input_Version = Get-VstsInput -Name 'Version' -Require
     $input_VersionType = Get-VstsInput -Name 'VersionType' -Require
     $input_Port = Get-VstsInput -Name 'Port'
-    $input_Environment = Get-VstsInput -Name 'Environment'
+    $input_AppParametersPath = Get-VstsInput -Name 'AppParametersPath'
     $input_Tenant = Get-VstsInput -Name 'Tenant'
+    $input_Environment = Get-VstsInput -Name 'Environment'    
     $input_Region = Get-VstsInput -Name 'Region'
 
     Write-Output "Inputs..."
@@ -84,8 +85,9 @@ try {
     Write-Output "Version: $input_Version"
     Write-Output "Version type: $input_VersionType"
     Write-Output "Port: $input_Port"
-    Write-Output "Environment: $input_Environment"
+    Write-Output "Application parameters path: $input_AppParametersPath"
     Write-Output "Tenant: $input_Tenant"
+    Write-Output "Environment: $input_Environment"
     Write-Output "Region: $input_Region"
 
     #Guard against wrong files being passed in
@@ -133,6 +135,26 @@ try {
 
     Write-Output (Get-VstsLocString -Key 'PS_AppManifestUpdated' -ArgumentList $input_AppManifestPath)
 
+    #Update the application name in the application parameters file
+    if($input_Environment -ne "" -or $input_Tenant -ne ""){
+        Write-Output (Get-VstsLocString -Key 'PS_UpdatingAppParameters' -ArgumentList $input_AppParametersPath)
+        $appParametersXml = [XML](Get-Content -Path $input_AppParametersPath)
+
+        if($input_Tenant -ne "") {
+            $newName = $appParametersXml.Application.Name + "-$input_Tenant"
+        }
+
+        if($input_Environmentenant -ne "" -and $input_Tenant -ne "") {
+            $newName = $newName + "-$input_Environment"
+        }elseif($input_Environment -ne "") {
+            $newName = $appParametersXml.Application.Name + "-$input_Environment"
+        }
+            
+        $appParametersXml.Application.Name = $newName   
+            
+        $appParametersXml.Save($input_AppParametersPath)         
+    }
+
     #Find and update any ServiceManifests
     $path = (Get-Item $input_AppManifestPath).Directory.FullName
 
@@ -177,7 +199,7 @@ try {
 
         $serviceManifestXml.Save($_.FullName)  
 
-		Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)
+		Write-Output (Get-VstsLocString -Key 'PS_SvcManifestUpdated' -ArgumentList $_.FullName)        
     }
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
