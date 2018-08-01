@@ -136,7 +136,7 @@ try {
     Write-Output (Get-VstsLocString -Key 'PS_AppManifestUpdated' -ArgumentList $input_AppManifestPath)
 
     #Update the application name in the application parameters file
-    if($input_Environment -ne "" -or $input_Tenant -ne ""){
+    if($input_AppParametersPath){
         Write-Output (Get-VstsLocString -Key 'PS_UpdatingAppParameters' -ArgumentList $input_AppParametersPath)
         $appParametersXml = [XML](Get-Content -Path $input_AppParametersPath)
 
@@ -144,9 +144,9 @@ try {
             $newName = $appParametersXml.Application.Name + "-$input_Tenant"
         }
 
-        if($input_Environmentenant -ne "" -and $input_Tenant -ne "") {
+        if(($input_Environment -ne "" -and $input_Environment -ne "empty") -and $input_Tenant -ne "") {
             $newName = $newName + "-$input_Environment"
-        }elseif($input_Environment -ne "") {
+        }elseif(($input_Environment -ne "" -and $input_Environment -ne "empty")) {
             $newName = $appParametersXml.Application.Name + "-$input_Environment"
         }
             
